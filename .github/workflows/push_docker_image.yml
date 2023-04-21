@@ -1,0 +1,24 @@
+name: Push Docker Image
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Log in to GitHub Packages
+      run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+    - name: Build and push Docker image
+      run: |
+        IMAGE_NAME="ghcr.io/${{ github.repository }}/buildozer-action"
+        VERSION="v1"
+        docker build -t "${IMAGE_NAME}:${VERSION}" .
+        docker push "${IMAGE_NAME}:${VERSION}"
