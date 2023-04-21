@@ -18,7 +18,7 @@ jobs:
 
     - name: Build and push Docker image
       run: |
-        IMAGE_NAME="ghcr.io/${{ github.repository }}/buildozer-action"
+        IMAGE_NAME="ghcr.io/${{ github.actor }}/buildozer-action"
         VERSION="v1"
         docker build -t "${IMAGE_NAME}:${VERSION}" .
         docker push "${IMAGE_NAME}:${VERSION}"
